@@ -1,13 +1,23 @@
-const API_URL = "http://localhost:3000";
 
-export function getProductImageUrl(image?: string): string {
+import { API_BASE_URL } from "../services/api";
+
+export const getImageUrl = (image?: string | null): string => {
   if (!image) return "/images/placeholder.png";
 
-  if (image.startsWith("http")) return image;
-
-  if (image.startsWith("/uploads/")) {
-    return `${API_URL}${image}`;
+  // Image déjà hébergée sur un serveur
+  if (image.startsWith("http://") || image.startsWith("https://")) {
+    return image;
   }
 
-  return image;
-}
+  // Image uploadée par une vendeuse
+  if (image.startsWith("/uploads/")) {
+    return `${API_BASE_URL}${image}`;
+  }
+
+  // Image locale du frontend
+  if (image.startsWith("/")) {
+    return image;
+  }
+
+  return `/images/${image}`;
+};
