@@ -8,7 +8,6 @@ import {
   MapPin,
   Phone,
   ShieldCheck,
-  UserPlus,
   Users,
 } from "lucide-react";
 

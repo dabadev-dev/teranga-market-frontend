@@ -10,7 +10,6 @@ import {
 
 import {
   getOrders,
-  updateOrderStatus,
   type Order,
   type OrderStatus,
 } from "../../services/orderService";
@@ -21,6 +20,7 @@ const statusLabels: Record<OrderStatus, string> = {
   EXPEDIEE: "Expédiée",
   LIVREE: "Livrée",
   ANNULEE: "Annulée",
+  PARTIELLEMENT_LIVREE: "Partiellement livrée",
 };
 
 const statusClasses: Record<OrderStatus, string> = {
@@ -29,12 +29,12 @@ const statusClasses: Record<OrderStatus, string> = {
   EXPEDIEE: "bg-purple-100 text-purple-800",
   LIVREE: "bg-green-100 text-green-800",
   ANNULEE: "bg-red-100 text-red-800",
+  PARTIELLEMENT_LIVREE: "bg-yellow-100 text-yellow-800",
 };
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
-  const [updatingId, setUpdatingId] = useState<number | null>(null);
   const [error, setError] = useState("");
 
   const loadOrders = async () => {
@@ -60,31 +60,18 @@ export default function AdminOrders() {
     loadOrders();
   }, []);
 
-  const handleStatusChange = async (
-    id: number,
-    statut: OrderStatus,
-  ) => {
-    try {
-      setUpdatingId(id);
-      setError("");
+const getImageUrl = (image?: string | null) => {
+    if (!image) return "";
 
-      const updatedOrder = await updateOrderStatus(id, statut);
-
-      setOrders((currentOrders) =>
-        currentOrders.map((order) =>
-          order.id === id ? updatedOrder : order,
-        ),
-      );
-    } catch (error: any) {
-      console.error(error);
-
-      setError(
-        error?.response?.data?.message ||
-          "Impossible de modifier le statut.",
-      );
-    } finally {
-      setUpdatingId(null);
+    if (image.startsWith("http://") || image.startsWith("https://")) {
+      return image;
     }
+
+    if (image.startsWith("/uploads/")) {
+return `${import.meta.env.VITE_API_URL}${image}`;
+    }
+
+    return image.startsWith("/") ? image : `/images/${image}`;
   };
 
   const getStatusIcon = (status: OrderStatus) => {
@@ -103,6 +90,9 @@ export default function AdminOrders() {
 
       case "ANNULEE":
         return <XCircle size={15} />;
+
+        case "PARTIELLEMENT_LIVREE":
+  return <Package size={15} />;
 
       default:
         return null;
@@ -181,9 +171,7 @@ export default function AdminOrders() {
                         Statut
                       </th>
 
-                      <th className="px-6 py-4 text-sm font-semibold text-gray-700">
-                        Modifier
-                      </th>
+                      
                     </tr>
                   </thead>
 
@@ -214,7 +202,7 @@ export default function AdminOrders() {
                               >
                                 {item.product?.image ? (
                                   <img
-                                    src={item.product.image}
+                                    src={getImageUrl(item.product.image)}
                                     alt={item.product.nom}
                                     className="h-10 w-10 rounded-lg object-cover"
                                   />
@@ -257,49 +245,7 @@ export default function AdminOrders() {
                             {getStatusIcon(order.statut)}
                             {statusLabels[order.statut]}
                           </span>
-                        </td>
-
-                        {/* MODIFIER */}
-                        <td className="px-6 py-5">
-                          <select
-                            value={order.statut}
-                            disabled={updatingId === order.id}
-                            onChange={(event) =>
-                              handleStatusChange(
-                                order.id,
-                                event.target.value as OrderStatus,
-                              )
-                            }
-                            className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/20 disabled:opacity-50"
-                          >
-                            <option value="EN_ATTENTE">
-                              En attente
-                            </option>
-
-                            <option value="CONFIRMEE">
-                              Confirmée
-                            </option>
-
-                            <option value="EXPEDIEE">
-                              Expédiée
-                            </option>
-
-                            <option value="LIVREE">
-                              Livrée
-                            </option>
-
-                            <option value="ANNULEE">
-                              Annulée
-                            </option>
-                          </select>
-
-                          {updatingId === order.id && (
-                            <Loader2
-                              size={15}
-                              className="ml-2 inline animate-spin text-gray-400"
-                            />
-                          )}
-                        </td>
+                        </td>                        
                       </tr>
                     ))}
                   </tbody>
@@ -338,7 +284,7 @@ export default function AdminOrders() {
                         >
                           {item.product?.image ? (
                             <img
-                              src={item.product.image}
+                              src={getImageUrl(item.product.image)}
                               alt={item.product.nom}
                               className="h-12 w-12 rounded-lg object-cover"
                             />
@@ -375,38 +321,6 @@ export default function AdminOrders() {
                           {Number(order.total).toLocaleString("fr-FR")} FCFA
                         </p>
                       </div>
-
-                      <select
-                        value={order.statut}
-                        disabled={updatingId === order.id}
-                        onChange={(event) =>
-                          handleStatusChange(
-                            order.id,
-                            event.target.value as OrderStatus,
-                          )
-                        }
-                        className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-yellow-500 disabled:opacity-50"
-                      >
-                        <option value="EN_ATTENTE">
-                          En attente
-                        </option>
-
-                        <option value="CONFIRMEE">
-                          Confirmée
-                        </option>
-
-                        <option value="EXPEDIEE">
-                          Expédiée
-                        </option>
-
-                        <option value="LIVREE">
-                          Livrée
-                        </option>
-
-                        <option value="ANNULEE">
-                          Annulée
-                        </option>
-                      </select>
                     </div>
                   </div>
                 ))}

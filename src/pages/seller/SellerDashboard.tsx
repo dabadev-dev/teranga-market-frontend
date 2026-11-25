@@ -1,14 +1,17 @@
 import { Link } from "react-router-dom";
-import { Package, ShoppingBag, Plus, ArrowRight, Store } from "lucide-react";
+import { Package, ShoppingBag, Plus, ArrowRight, } from "lucide-react";
 
 import { useEffect, useState } from "react";
 import { getMyProducts, type Product } from "../../services/productService";
 
-import { getSellerOrders, type Order } from "../../services/orderService";
+import {
+  getSellerOrders,
+  type SellerOrder,
+} from "../../services/orderService";
 
 const SellerDashboard = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<SellerOrder[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

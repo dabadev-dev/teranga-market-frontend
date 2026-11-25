@@ -64,6 +64,20 @@ const AdminProducts = () => {
     }
   };
 
+  const getImageUrl = (image?: string | null) => {
+    if (!image) return "";
+
+    if (image.startsWith("http://") || image.startsWith("https://")) {
+      return image;
+    }
+
+    if (image.startsWith("/uploads/")) {
+      return `http://localhost:3000${image}`;
+    }
+
+    return image.startsWith("/") ? image : `/images/${image}`;
+  };
+
   return (
     <div className="min-h-screen bg-[#FAF7F0]">
       {/* En-tête */}
@@ -178,7 +192,7 @@ const AdminProducts = () => {
                           <div className="w-16 h-16 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
                             {product.image ? (
                               <img
-                                src={product.image}
+                                src={getImageUrl(product.image)}
                                 alt={product.nom}
                                 className="w-full h-full object-cover"
                               />

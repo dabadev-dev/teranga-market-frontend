@@ -15,6 +15,20 @@ const SellerOrders = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const getImageUrl = (image?: string | null) => {
+    if (!image) return "";
+
+    if (image.startsWith("http://") || image.startsWith("https://")) {
+      return image;
+    }
+
+    if (image.startsWith("/uploads/")) {
+      return `http://localhost:3000${image}`;
+    }
+
+    return image.startsWith("/") ? image : `/images/${image}`;
+  };
+
   useEffect(() => {
     const loadOrders = async () => {
       try {
@@ -213,7 +227,7 @@ const SellerOrders = () => {
                         <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg bg-gray-100">
                           {item.product?.image ? (
                             <img
-                              src={item.product.image}
+                              src={getImageUrl(item.product.image)}
                               alt={item.product.nom}
                               className="h-full w-full object-cover"
                             />

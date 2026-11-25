@@ -8,7 +8,6 @@ import {
   Lock,
   Mail,
   MapPin,
-  ShieldCheck,
   ShoppingBag,
   Users,
 } from "lucide-react";
