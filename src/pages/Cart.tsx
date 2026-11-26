@@ -25,7 +25,7 @@ const getImageUrl = (image?: string | null) => {
   }
 
   if (image.startsWith("/uploads/")) {
-    return `http://localhost:3000${image}`;
+    return `https://teranga-market-backend-64wi.onrender.com${image}`;
   }
 
   return image.startsWith("/") ? image : `/images/${image}`;

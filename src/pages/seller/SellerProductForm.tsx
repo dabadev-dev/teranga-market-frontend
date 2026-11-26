@@ -42,7 +42,7 @@ const SellerProductForm = () => {
   useEffect(() => {
     const loadCategories = async () => {
       try {
-        const response = await fetch("http://localhost:3000/categories");
+        const response = await fetch("https://teranga-market-backend-64wi.onrender.com/categories");
 
         if (!response.ok) {
           throw new Error("Erreur lors du chargement des catégories");
@@ -83,7 +83,7 @@ const SellerProductForm = () => {
 
         if (product.image) {
           const imageUrl = product.image.startsWith("/uploads/")
-            ? `http://localhost:3000${product.image}`
+            ? `https://teranga-market-backend-64wi.onrender.com${product.image}`
             : product.image.startsWith("http")
               ? product.image
               : product.image.startsWith("/")
