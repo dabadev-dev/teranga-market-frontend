@@ -153,7 +153,11 @@ export default function Home() {
         </div>
 
         {loading ? (
-          <p className="mt-10 text-gray-500">Chargement des catégories...</p>
+          <div className="flex justify-center items-center h-screen">
+            <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-purple-500"></div>
+            <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-red-500 ml-3"></div>
+            <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-blue-500 ml-3"></div>
+          </div>
         ) : (
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {categories.map((category) => (
@@ -212,7 +216,11 @@ export default function Home() {
           </div>
 
           {loading ? (
-            <p className="mt-10 text-gray-500">Chargement des produits...</p>
+            <div className="flex justify-center items-center h-screen">
+              <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-purple-500"></div>
+              <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-red-500 ml-3"></div>
+              <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-blue-500 ml-3"></div>
+            </div>
           ) : error ? (
             <p className="mt-10 text-red-600">{error}</p>
           ) : products.length === 0 ? (

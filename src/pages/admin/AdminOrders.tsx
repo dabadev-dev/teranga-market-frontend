@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  CheckCircle,
-  Clock,
-  Package,
-  Truck,
-  XCircle,
-} from "lucide-react";
+import { CheckCircle, Clock, Package, Truck, XCircle } from "lucide-react";
 
 import {
   getOrders,
@@ -59,7 +53,7 @@ export default function AdminOrders() {
     loadOrders();
   }, []);
 
-const getImageUrl = (image?: string | null) => {
+  const getImageUrl = (image?: string | null) => {
     if (!image) return "";
 
     if (image.startsWith("http://") || image.startsWith("https://")) {
@@ -67,7 +61,7 @@ const getImageUrl = (image?: string | null) => {
     }
 
     if (image.startsWith("/uploads/")) {
-return `${import.meta.env.VITE_API_URL}${image}`;
+      return `${import.meta.env.VITE_API_URL}${image}`;
     }
 
     return image.startsWith("/") ? image : `/images/${image}`;
@@ -90,8 +84,8 @@ return `${import.meta.env.VITE_API_URL}${image}`;
       case "ANNULEE":
         return <XCircle size={15} />;
 
-        case "PARTIELLEMENT_LIVREE":
-  return <Package size={15} />;
+      case "PARTIELLEMENT_LIVREE":
+        return <Package size={15} />;
 
       default:
         return null;
@@ -101,7 +95,6 @@ return `${import.meta.env.VITE_API_URL}${image}`;
   return (
     <main className="min-h-screen bg-[#FAF7F0] px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-
         {/* HEADER */}
         <div className="mb-8">
           <p className="text-sm font-semibold uppercase tracking-wider text-yellow-600">
@@ -126,14 +119,13 @@ return `${import.meta.env.VITE_API_URL}${image}`;
 
         {/* CONTENU */}
         <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
-
           {/* LOADING */}
           {loading ? (
             <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-purple-500"></div>
-        <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-red-500 ml-3"></div>
-        <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-blue-500 ml-3"></div>
-      </div>
+              <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-purple-500"></div>
+              <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-red-500 ml-3"></div>
+              <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-blue-500 ml-3"></div>
+            </div>
           ) : orders.length === 0 ? (
             <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-100">
@@ -170,8 +162,6 @@ return `${import.meta.env.VITE_API_URL}${image}`;
                       <th className="px-6 py-4 text-sm font-semibold text-gray-700">
                         Statut
                       </th>
-
-                      
                     </tr>
                   </thead>
 
@@ -245,7 +235,7 @@ return `${import.meta.env.VITE_API_URL}${image}`;
                             {getStatusIcon(order.statut)}
                             {statusLabels[order.statut]}
                           </span>
-                        </td>                        
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -256,7 +246,6 @@ return `${import.meta.env.VITE_API_URL}${image}`;
               <div className="divide-y divide-gray-100 md:hidden">
                 {orders.map((order) => (
                   <div key={order.id} className="p-5">
-
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <p className="font-bold text-gray-900">
@@ -278,10 +267,7 @@ return `${import.meta.env.VITE_API_URL}${image}`;
 
                     <div className="mt-4 space-y-3">
                       {order.items?.map((item) => (
-                        <div
-                          key={item.id}
-                          className="flex items-center gap-3"
-                        >
+                        <div key={item.id} className="flex items-center gap-3">
                           {item.product?.image ? (
                             <img
                               src={getImageUrl(item.product.image)}
@@ -290,10 +276,7 @@ return `${import.meta.env.VITE_API_URL}${image}`;
                             />
                           ) : (
                             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100">
-                              <Package
-                                size={18}
-                                className="text-gray-400"
-                              />
+                              <Package size={18} className="text-gray-400" />
                             </div>
                           )}
 
@@ -313,9 +296,7 @@ return `${import.meta.env.VITE_API_URL}${image}`;
 
                     <div className="mt-5 flex items-center justify-between border-t border-gray-100 pt-4">
                       <div>
-                        <p className="text-xs text-gray-500">
-                          Total
-                        </p>
+                        <p className="text-xs text-gray-500">Total</p>
 
                         <p className="font-bold text-green-900">
                           {Number(order.total).toLocaleString("fr-FR")} FCFA
