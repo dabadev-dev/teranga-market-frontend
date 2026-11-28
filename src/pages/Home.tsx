@@ -90,7 +90,7 @@ export default function Home() {
     <main className="bg-[#FAF7F0]">
       {/* HERO */}
 
-      <section className="relative isolate w-full lg:min-h-[720px] overflow-hidden">
+      <section className="relative isolate min-h-[600px] w-full overflow-hidden sm:min-h-[650px] lg:min-h-[720px]">
         {/* Image avec le masque */}
         <div className="absolute inset-0 z-0 bg-[url('/images/hero.png')] bg-cover bg-center mask-r-from-20%" />
 
