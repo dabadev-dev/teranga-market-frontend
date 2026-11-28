@@ -203,9 +203,11 @@ export default function Products() {
         {/* RÉSULTATS */}
         <div className="mt-10">
           {loading ? (
-            <div className="py-16 text-center text-gray-500">
-              Chargement des produits...
-            </div>
+            <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-purple-500"></div>
+        <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-red-500 ml-3"></div>
+        <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-blue-500 ml-3"></div>
+      </div>
           ) : error ? (
             <div className="rounded-2xl bg-white px-6 py-12 text-center">
               <p className="text-red-600">{error}</p>

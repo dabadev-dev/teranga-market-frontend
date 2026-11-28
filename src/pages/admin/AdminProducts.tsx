@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowLeft,
-  Edit,
-  Package,
-  Trash2,
-  Loader2,
-} from "lucide-react";
+import { ArrowLeft, Edit, Package, Trash2, Loader2 } from "lucide-react";
 
 import {
   getProducts,
@@ -24,10 +18,7 @@ const AdminProducts = () => {
       const data = await getProducts();
       setProducts(data);
     } catch (error) {
-      console.error(
-        "Erreur lors du chargement des produits :",
-        error,
-      );
+      console.error("Erreur lors du chargement des produits :", error);
     } finally {
       setLoading(false);
     }
@@ -53,10 +44,7 @@ const AdminProducts = () => {
         currentProducts.filter((product) => product.id !== id),
       );
     } catch (error) {
-      console.error(
-        "Erreur lors de la suppression du produit :",
-        error,
-      );
+      console.error("Erreur lors de la suppression du produit :", error);
 
       alert("Impossible de supprimer ce produit.");
     } finally {
@@ -81,7 +69,7 @@ const AdminProducts = () => {
   return (
     <div className="min-h-screen bg-[#FAF7F0]">
       {/* En-tête */}
-      <div className="bg-green-950 text-white">
+      <div className="bg-green-900 text-white">
         <div className="max-w-7xl mx-auto px-6 py-6">
           <Link
             to="/dashboard/admin"
@@ -114,9 +102,7 @@ const AdminProducts = () => {
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Nombre de produits */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-6">
-          <p className="text-sm text-gray-500">
-            Produits publiés
-          </p>
+          <p className="text-sm text-gray-500">Produits publiés</p>
 
           <p className="text-3xl font-bold text-gray-900 mt-1">
             {products.length}
@@ -125,23 +111,15 @@ const AdminProducts = () => {
 
         {/* Chargement */}
         {loading ? (
-          <div className="flex justify-center items-center py-20">
-            <Loader2
-              className="animate-spin text-green-800"
-              size={32}
-            />
-
-            <span className="ml-3 text-gray-500">
-              Chargement des produits...
-            </span>
-          </div>
+            <div className="flex justify-center items-center h-screen">
+              <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-purple-500"></div>
+              <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-red-500 ml-3"></div>
+              <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-blue-500 ml-3"></div>
+            </div>
         ) : products.length === 0 ? (
           /* Aucun produit */
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-12 text-center">
-            <Package
-              className="mx-auto text-gray-400"
-              size={48}
-            />
+            <Package className="mx-auto text-gray-400" size={48} />
 
             <h2 className="text-lg font-semibold text-gray-800 mt-4">
               Aucun produit
@@ -198,10 +176,7 @@ const AdminProducts = () => {
                               />
                             ) : (
                               <div className="w-full h-full flex items-center justify-center">
-                                <Package
-                                  className="text-gray-400"
-                                  size={24}
-                                />
+                                <Package className="text-gray-400" size={24} />
                               </div>
                             )}
                           </div>
@@ -273,14 +248,10 @@ const AdminProducts = () => {
                             className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 disabled:opacity-50 transition text-sm font-medium"
                           >
                             {deletingId === product.id ? (
-                              <Loader2
-                                size={16}
-                                className="animate-spin"
-                              />
+                              <Loader2 size={16} className="animate-spin" />
                             ) : (
                               <Trash2 size={16} />
                             )}
-
                             Supprimer
                           </button>
                         </div>

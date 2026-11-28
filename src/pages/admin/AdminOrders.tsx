@@ -130,10 +130,11 @@ return `${import.meta.env.VITE_API_URL}${image}`;
 
           {/* LOADING */}
           {loading ? (
-            <div className="flex items-center justify-center gap-3 py-16 text-gray-500">
-              <Loader2 size={20} className="animate-spin" />
-              Chargement des commandes...
-            </div>
+            <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-purple-500"></div>
+        <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-red-500 ml-3"></div>
+        <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-blue-500 ml-3"></div>
+      </div>
           ) : orders.length === 0 ? (
             <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-100">

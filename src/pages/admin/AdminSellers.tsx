@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Check,
-  X,
-  Clock,
-  UserCheck,
-} from "lucide-react";
+import { Check, X, Clock, UserCheck } from "lucide-react";
 
 import {
   getUsers,
@@ -21,14 +16,9 @@ const AdminSellers = () => {
     try {
       const users = await getUsers();
 
-      setSellers(
-        users.filter((user) => user.role === "VENDEUSE"),
-      );
+      setSellers(users.filter((user) => user.role === "VENDEUSE"));
     } catch (error) {
-      console.error(
-        "Erreur lors du chargement des vendeuses :",
-        error,
-      );
+      console.error("Erreur lors du chargement des vendeuses :", error);
     } finally {
       setLoading(false);
     }
@@ -38,10 +28,7 @@ const AdminSellers = () => {
     loadSellers();
   }, []);
 
-  const handleStatus = async (
-    id: number,
-    statut: "APPROUVEE" | "REFUSEE",
-  ) => {
+  const handleStatus = async (id: number, statut: "APPROUVEE" | "REFUSEE") => {
     try {
       setProcessingId(id);
 
@@ -49,16 +36,11 @@ const AdminSellers = () => {
 
       setSellers((current) =>
         current.map((seller) =>
-          seller.id === id
-            ? { ...seller, statut }
-            : seller,
+          seller.id === id ? { ...seller, statut } : seller,
         ),
       );
     } catch (error) {
-      console.error(
-        "Erreur lors de la modification du statut :",
-        error,
-      );
+      console.error("Erreur lors de la modification du statut :", error);
 
       alert("Une erreur est survenue.");
     } finally {
@@ -68,29 +50,26 @@ const AdminSellers = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#FAF7F0]">
-        <p className="text-gray-500">
-          Chargement des vendeuses...
-        </p>
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-purple-500"></div>
+        <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-red-500 ml-3"></div>
+        <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-blue-500 ml-3"></div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-[#FAF7F0]">
-      <div className="bg-green-950 text-white">
+      <div className="bg-green-900 text-white">
         <div className="max-w-7xl mx-auto px-6 py-6">
-          <p className="text-yellow-400 text-sm font-medium">
-            TerangaMarket
-          </p>
+          <p className="text-yellow-400 text-sm font-medium">TerangaMarket</p>
 
           <h1 className="text-2xl md:text-3xl font-bold mt-1">
             Gestion des vendeuses
           </h1>
 
           <p className="text-green-100 mt-2">
-            Validez les vendeuses qui souhaitent rejoindre la
-            marketplace.
+            Validez les vendeuses qui souhaitent rejoindre la marketplace.
           </p>
         </div>
       </div>
@@ -98,14 +77,9 @@ const AdminSellers = () => {
       <main className="max-w-7xl mx-auto px-6 py-8">
         {sellers.length === 0 ? (
           <div className="bg-white rounded-2xl p-10 text-center shadow-sm">
-            <UserCheck
-              size={42}
-              className="mx-auto text-gray-400 mb-4"
-            />
+            <UserCheck size={42} className="mx-auto text-gray-400 mb-4" />
 
-            <h2 className="font-bold text-lg">
-              Aucune vendeuse
-            </h2>
+            <h2 className="font-bold text-lg">Aucune vendeuse</h2>
 
             <p className="text-gray-500 mt-2">
               Aucune vendeuse n'est actuellement enregistrée.
@@ -122,10 +96,7 @@ const AdminSellers = () => {
                   <div>
                     <div className="flex items-center gap-3">
                       <div className="w-11 h-11 rounded-full bg-green-100 flex items-center justify-center">
-                        <UserCheck
-                          size={21}
-                          className="text-green-800"
-                        />
+                        <UserCheck size={21} className="text-green-800" />
                       </div>
 
                       <div>
@@ -133,9 +104,7 @@ const AdminSellers = () => {
                           {seller.nom}
                         </h2>
 
-                        <p className="text-sm text-gray-500">
-                          {seller.email}
-                        </p>
+                        <p className="text-sm text-gray-500">{seller.email}</p>
                       </div>
                     </div>
 
@@ -165,12 +134,7 @@ const AdminSellers = () => {
                         <button
                           type="button"
                           disabled={processingId === seller.id}
-                          onClick={() =>
-                            handleStatus(
-                              seller.id,
-                              "APPROUVEE",
-                            )
-                          }
+                          onClick={() => handleStatus(seller.id, "APPROUVEE")}
                           className="inline-flex items-center gap-2 bg-green-800 hover:bg-green-900 disabled:opacity-50 text-white px-4 py-2 rounded-lg font-medium transition"
                         >
                           <Check size={17} />
@@ -180,12 +144,7 @@ const AdminSellers = () => {
                         <button
                           type="button"
                           disabled={processingId === seller.id}
-                          onClick={() =>
-                            handleStatus(
-                              seller.id,
-                              "REFUSEE",
-                            )
-                          }
+                          onClick={() => handleStatus(seller.id, "REFUSEE")}
                           className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg font-medium transition"
                         >
                           <X size={17} />

@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Edit,
-  Loader2,
-  Package,
-  Plus,
-  Trash2,
-  X,
-} from "lucide-react";
+import { Edit, Loader2, Package, Plus, Trash2, X } from "lucide-react";
 
 import {
   createCategory,
@@ -24,8 +17,7 @@ export default function AdminCategories() {
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
   const [showForm, setShowForm] = useState(false);
-  const [editingCategory, setEditingCategory] =
-    useState<Category | null>(null);
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
 
   const [nom, setNom] = useState("");
   const [description, setDescription] = useState("");
@@ -79,9 +71,7 @@ export default function AdminCategories() {
     setShowForm(true);
   };
 
-  const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-  ) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!nom.trim()) {
@@ -99,35 +89,24 @@ export default function AdminCategories() {
       };
 
       if (editingCategory) {
-        const updated = await updateCategory(
-          editingCategory.id,
-          data,
-        );
+        const updated = await updateCategory(editingCategory.id, data);
 
         setCategories((current) =>
           current.map((category) =>
-            category.id === updated.id
-              ? updated
-              : category,
+            category.id === updated.id ? updated : category,
           ),
         );
       } else {
         const created = await createCategory(data);
 
-        setCategories((current) => [
-          created,
-          ...current,
-        ]);
+        setCategories((current) => [created, ...current]);
       }
 
       resetForm();
     } catch (error: any) {
       console.error(error);
 
-      setError(
-        error?.response?.data?.message ||
-          "Une erreur est survenue.",
-      );
+      setError(error?.response?.data?.message || "Une erreur est survenue.");
     } finally {
       setSaving(false);
     }
@@ -164,7 +143,6 @@ export default function AdminCategories() {
   return (
     <main className="min-h-screen bg-[#FAF7F0] px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
-
         {/* HEADER */}
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -225,10 +203,7 @@ export default function AdminCategories() {
               </button>
             </div>
 
-            <form
-              onSubmit={handleSubmit}
-              className="grid gap-5 md:grid-cols-2"
-            >
+            <form onSubmit={handleSubmit} className="grid gap-5 md:grid-cols-2">
               <div>
                 <label
                   htmlFor="category-name"
@@ -241,9 +216,7 @@ export default function AdminCategories() {
                   id="category-name"
                   type="text"
                   value={nom}
-                  onChange={(event) =>
-                    setNom(event.target.value)
-                  }
+                  onChange={(event) => setNom(event.target.value)}
                   placeholder="Ex : Céréales"
                   className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 outline-none transition focus:border-yellow-500 focus:bg-white focus:ring-2 focus:ring-yellow-500/20"
                 />
@@ -261,9 +234,7 @@ export default function AdminCategories() {
                   id="category-description"
                   type="text"
                   value={description}
-                  onChange={(event) =>
-                    setDescription(event.target.value)
-                  }
+                  onChange={(event) => setDescription(event.target.value)}
                   placeholder="Ex : Produits céréaliers locaux"
                   className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 outline-none transition focus:border-yellow-500 focus:bg-white focus:ring-2 focus:ring-yellow-500/20"
                 />
@@ -275,16 +246,9 @@ export default function AdminCategories() {
                   disabled={saving}
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-green-800 px-5 py-3 font-semibold text-white transition hover:bg-green-900 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {saving && (
-                    <Loader2
-                      size={17}
-                      className="animate-spin"
-                    />
-                  )}
+                  {saving && <Loader2 size={17} className="animate-spin" />}
 
-                  {editingCategory
-                    ? "Enregistrer"
-                    : "Créer la catégorie"}
+                  {editingCategory ? "Enregistrer" : "Créer la catégorie"}
                 </button>
 
                 <button
@@ -302,19 +266,14 @@ export default function AdminCategories() {
         {/* LISTE */}
         <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
           {loading ? (
-            <div className="flex items-center justify-center gap-3 py-16 text-gray-500">
-              <Loader2
-                size={20}
-                className="animate-spin"
-              />
-              Chargement des catégories...
+            <div className="flex justify-center items-center h-screen">
+              <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-purple-500"></div>
+              <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-red-500 ml-3"></div>
+              <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-blue-500 ml-3"></div>
             </div>
           ) : categories.length === 0 ? (
             <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
-              <Package
-                size={30}
-                className="text-gray-400"
-              />
+              <Package size={30} className="text-gray-400" />
 
               <h2 className="mt-4 text-lg font-semibold text-gray-800">
                 Aucune catégorie
@@ -334,10 +293,7 @@ export default function AdminCategories() {
                   <div>
                     <div className="flex items-center gap-3">
                       <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-50">
-                        <Package
-                          size={18}
-                          className="text-green-800"
-                        />
+                        <Package size={18} className="text-green-800" />
                       </div>
 
                       <div>
@@ -357,9 +313,7 @@ export default function AdminCategories() {
                   <div className="flex gap-2">
                     <button
                       type="button"
-                      onClick={() =>
-                        openEditForm(category)
-                      }
+                      onClick={() => openEditForm(category)}
                       className="inline-flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
                     >
                       <Edit size={16} />
@@ -368,23 +322,15 @@ export default function AdminCategories() {
 
                     <button
                       type="button"
-                      onClick={() =>
-                        handleDelete(category.id)
-                      }
-                      disabled={
-                        deletingId === category.id
-                      }
+                      onClick={() => handleDelete(category.id)}
+                      disabled={deletingId === category.id}
                       className="inline-flex items-center gap-2 rounded-lg border border-red-200 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:opacity-50"
                     >
                       {deletingId === category.id ? (
-                        <Loader2
-                          size={16}
-                          className="animate-spin"
-                        />
+                        <Loader2 size={16} className="animate-spin" />
                       ) : (
                         <Trash2 size={16} />
                       )}
-
                       Supprimer
                     </button>
                   </div>

@@ -102,8 +102,10 @@ const SellerProducts = () => {
 
         {/* Chargement */}
         {loading ? (
-          <div className="flex min-h-60 items-center justify-center">
-            <Loader2 size={35} className="animate-spin text-green-800" />
+          <div className="flex justify-center items-center h-screen">
+            <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-purple-500"></div>
+            <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-red-500 ml-3"></div>
+            <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-blue-500 ml-3"></div>
           </div>
         ) : products.length === 0 ? (
           <div className="mt-8 rounded-2xl bg-white px-6 py-16 text-center shadow-sm">
