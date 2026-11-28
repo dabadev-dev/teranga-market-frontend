@@ -5,7 +5,6 @@ import {
   Package,
   Truck,
   XCircle,
-  Loader2,
 } from "lucide-react";
 
 import {
